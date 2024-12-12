@@ -11,7 +11,7 @@ func GetHome(c echo.Context) error {
 			"<h3><pre>           (use method GET & this headers "+
 			"Accept: \"application/json\" ,  Content-Type:\"application/json\" )\n\n"+
 			"			{\n"+
-			"				id: 35b75a6b-0183-43e1-bdd0-3cd062dc6935\n"+
+			"				\"id\": \"35b75a6b-0183-43e1-bdd0-3cd062dc6935\"\n"+
 			"			}</pre></h3>"+
 			"</html>")
 }
