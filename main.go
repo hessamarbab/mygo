@@ -15,7 +15,7 @@ func main() {
 	defer database.CloseConnection()
 	database.ConnectToPgrs()
 	database.AutoMigrate()
-	seeders.SeedUsers() // todo uncomment
+	seeders.SeedUsers()
 
 	//http app
 	e := echo.New()

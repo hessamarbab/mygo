@@ -19,7 +19,7 @@ func GetUser(c echo.Context) error {
 	} else {
 		var user models.User
 		user.Id = json_map["id"]
-		result := db.First(&user)
+		result := db.First(&user, "id = ?", json_map["id"])
 		if result.Error != nil {
 			return c.JSON(http.StatusNotFound, struct {
 				Message string `json:"message"`
