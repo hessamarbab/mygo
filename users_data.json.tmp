@@ -1,0 +1,38 @@
+[
+  {
+    "id": "35b75a6b-0183-43e1-bdd0-3cd062dc6935",
+    "name": "Chasity Stanton",
+    "email": "kattiepaucek@bednar.net",
+    "phone_number": "4786044000",
+    "addresses": [
+      {
+        "street": "1601 Islandsfurt",
+        "city": "Tulsa",
+        "state": "Oregon",
+        "zip_code": "98581",
+        "country": "Dominican Republic"
+      },
+      {
+        "street": "509 New Villagemouth",
+        "city": "Durham",
+        "state": "Iowa",
+        "zip_code": "31364",
+        "country": "Myanmar"
+      },
+      {
+        "street": "344 Inletmouth",
+        "city": "Omaha",
+        "state": "Virginia",
+        "zip_code": "89400",
+        "country": "Nauru"
+      },
+      {
+        "street": "8952 Forthaven",
+        "city": "Phoenix",
+        "state": "Maine",
+        "zip_code": "83141",
+        "country": "Belarus"
+      }
+    ]
+  }
+ ]

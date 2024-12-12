@@ -1,0 +1,52 @@
+
+services:
+  web:
+    build:
+      context: './'
+      dockerfile: Dockerfile
+    image: 'sika-hessam/app'
+    container_name: main
+    ports:
+      - '${APP_PORT:-80}:80'
+    volumes:
+      - '.:/usr/src/app'
+    networks:
+      - sika
+    depends_on:
+      postgres:
+          condition: service_healthy
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    volumes:
+      - ./postgres/data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - sika
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - sika
+
+networks:
+  sika:
+    driver: bridge
