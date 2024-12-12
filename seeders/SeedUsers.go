@@ -11,35 +11,25 @@ import (
 
 func SeedUsers() {
 	users := readFile()
-	ch := make(chan dto.User, 10)
-	quit := make(chan bool)
+	ch := make(chan dto.User, 10000)
 	for i := 0; i < 10; i++ {
-		go insertToDB(ch, quit)
+		go insertToDB(ch)
 	}
 	for _, usr := range users {
 		ch <- usr
 	}
-	for i := 0; i < 10; i++ {
-		quit <- false
-	}
-	close(ch)
-	close(quit)
 	log.Println("seed Done!")
 }
 
-func insertToDB(ch chan dto.User, quit chan bool) {
+func insertToDB(ch chan dto.User) {
 	for {
-		select {
-		case usr := <-ch:
-			var user models.User
-			user.Fill(usr)
-			dbClient := database.GetDB()
-			err := dbClient.Create(&user).Error
-			if err != nil {
-				log.Fatal("Error creating users")
-			}
-		case <-quit:
-			return
+		usr := <-ch
+		var user models.User
+		user.Fill(usr)
+		dbClient := database.GetDB()
+		err := dbClient.Create(&user).Error
+		if err != nil {
+			log.Fatal("Error creating users")
 		}
 	}
 }
