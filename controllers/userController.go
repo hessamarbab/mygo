@@ -19,16 +19,12 @@ func GetUser(c echo.Context) error {
 	} else {
 		var user models.User
 		user.Id = json_map["id"]
-		result := db.First(&user, "id = ?", json_map["id"])
-		if result.Error != nil {
+		err := db.Model(&models.User{}).Preload("CreditCards").Find(&user, "id = ?", json_map["id"]).Error
+
+		if err != nil {
 			return c.JSON(http.StatusNotFound, struct {
 				Message string `json:"message"`
 			}{"Not found"})
-		}
-		var addresses []models.Address
-		res := db.Model(&models.Address{}).Where("user_id = ?", json_map["id"]).Find(&addresses)
-		if res.Error == nil {
-			user.Addresses = addresses
 		}
 		return c.JSON(http.StatusOK, user)
 	}
