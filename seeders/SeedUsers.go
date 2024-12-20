@@ -10,6 +10,9 @@ import (
 )
 
 func SeedUsers() {
+	if checkDB() {
+		return
+	}
 	users := readFile()
 	ch := make(chan dto.User, 10000)
 	for i := 0; i < 10; i++ {
@@ -44,4 +47,9 @@ func readFile() []dto.User {
 		log.Fatal(err)
 	}
 	return users
+}
+func checkDB() bool {
+	dbClient := database.GetDB()
+	err := dbClient.First(&models.User{}).Error
+	return err == nil
 }
