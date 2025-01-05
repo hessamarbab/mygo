@@ -15,13 +15,14 @@ func GetUser(c echo.Context) error {
 
 	var reqBody GetUserRequestBody
 
-	if err := c.Bind(&reqBody); err != nil {
-		return json.E400(c)
+	err := c.Bind(&reqBody)
+	if err != nil || reqBody.Id == "" {
+		return json.E400(c, "")
 	} else {
 
 		err, user := repositories.GetUserWithAddressesById(reqBody.Id)
 		if err != nil {
-			return json.E404(c)
+			return json.E404(c, "")
 		}
 
 		return c.JSON(http.StatusOK, user)

@@ -5,8 +5,11 @@ import (
 	"net/http"
 )
 
-func E400(c echo.Context) error {
+func E400(c echo.Context, message string) error {
+	if message == "" {
+		message = "Bad request"
+	}
 	return c.JSON(http.StatusBadRequest, struct {
 		Message string `json:"message"`
-	}{"Bad request"})
+	}{message})
 }

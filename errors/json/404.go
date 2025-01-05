@@ -5,8 +5,11 @@ import (
 	"net/http"
 )
 
-func E404(c echo.Context) error {
+func E404(c echo.Context, message string) error {
+	if message == "" {
+		message = "Not found"
+	}
 	return c.JSON(http.StatusNotFound, struct {
 		Message string `json:"message"`
-	}{"Not found"})
+	}{message})
 }
