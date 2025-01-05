@@ -21,12 +21,12 @@ func SeedUsers() {
 	for _, usr := range users {
 		ch <- usr
 	}
+	close(ch)
 	log.Println("seed Done!")
 }
 
 func insertToDB(ch chan dto.User) {
-	for {
-		usr := <-ch
+	for usr := range ch {
 		var user models.User
 		user.Fill(usr)
 		dbClient := database.GetDB()
