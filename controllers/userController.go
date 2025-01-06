@@ -25,6 +25,7 @@ func (cntlr *UserController) GetUser(c echo.Context) error {
 
 	err := c.Bind(&reqBody)
 	if err != nil || reqBody.Id == "" {
+
 		return json.E400(c, "")
 	} else {
 
