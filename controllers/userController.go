@@ -11,7 +11,15 @@ type GetUserRequestBody struct {
 	Id string `json:"id"`
 }
 
-func GetUser(c echo.Context) error {
+type UserController struct {
+	userRepo repositories.UserRepo
+}
+
+func NewUserController(userRepo repositories.UserRepo) *UserController {
+	return &UserController{userRepo: userRepo}
+}
+
+func (cntlr *UserController) GetUser(c echo.Context) error {
 
 	var reqBody GetUserRequestBody
 
@@ -20,7 +28,7 @@ func GetUser(c echo.Context) error {
 		return json.E400(c, "")
 	} else {
 
-		err, user := repositories.GetUserWithAddressesById(reqBody.Id)
+		err, user := cntlr.userRepo.GetUserWithAddressesById(reqBody.Id)
 		if err != nil {
 			return json.E404(c, "")
 		}

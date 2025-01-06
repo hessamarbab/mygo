@@ -5,8 +5,7 @@ import (
 	"sika-hessam/controllers"
 )
 
-func Router(e *echo.Echo) {
-
+func Router(e *echo.Echo, userController *controllers.UserController) {
 	e.GET("/", controllers.GetHome)
-	e.GET("/user", controllers.GetUser)
+	e.GET("/user", userController.GetUser)
 }

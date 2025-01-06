@@ -4,7 +4,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"log"
+	"sika-hessam/controllers"
 	"sika-hessam/database"
+	"sika-hessam/repositories"
 	"sika-hessam/router"
 	"sika-hessam/seeders"
 )
@@ -19,8 +21,9 @@ func main() {
 
 	//http app
 	e := echo.New()
+	userController := controllers.NewUserController(&repositories.UserPgsRepo{})
 
-	router.Router(e)
+	router.Router(e, userController)
 
 	e.Logger.Fatal(e.Start(":80"))
 }
